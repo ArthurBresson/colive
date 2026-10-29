@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CoLive - Inscription{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        :root {
+            --colive-blue: #1d3557;
+            --colive-light-blue: #f8f8fb;
+            --colive-coral: #e76f51;
+            --colive-yellow: #e9c46a;
+        }
+
+        .login-section {
+            background-color: var(--colive-light-blue);
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .login-card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .colive-input {
+            transition: all 0.3s ease;
+            border: 2px solid #eee !important;
+            padding: 12px 15px;
+        }
+
+        .colive-input:focus {
+            border-color: var(--colive-yellow) !important;
+            box-shadow: 0 0 0 0.25rem rgba(233, 196, 106, 0.25) !important;
+            transform: translateY(-2px);
+        }
+
+        .btn-login {
+            background-color: var(--colive-coral);
+            color: white;
+            border: none;
+            font-weight: 700;
+            padding: 12px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .btn-login:hover {
+            background-color: #d65d41;
+            color: white;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 15px rgba(231, 111, 81, 0.2);
+        }
+
+        .text-colive-blue { color: var(--colive-blue); }
+
+        /* Ajustement pour les labels de formulaire Symfony */
+        label {
+            font-weight: bold;
+            color: var(--colive-blue);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+    <section class="login-section py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 col-lg-6">
+
+                    <div class="text-center mb-4">
+                        <h1 class="h2 fw-bold text-colive-blue">Rejoignez CoLive !</h1>
+                        <p class="text-muted">Créez votre compte pour trouver votre future colocation.</p>
+                    </div>
+
+                    <div class="card login-card p-4">
+                        {{ form_start(registrationForm) }}
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    {{ form_label(registrationForm.prenomUtil) }}
+                                    {{ form_widget(registrationForm.prenomUtil, {attr: {class: 'form-control colive-input rounded-3', placeholder: 'Prénom'}}) }}
+                                </div>
+                                <div class="col-6 mb-3">
+                                    {{ form_label(registrationForm.nomUtil) }}
+                                    {{ form_widget(registrationForm.nomUtil, {attr: {class: 'form-control colive-input rounded-3', placeholder: 'Nom'}}) }}
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form_label(registrationForm.email) }}
+                                {{ form_widget(registrationForm.email, {attr: {class: 'form-control colive-input rounded-3', placeholder: 'exemple@mail.com'}}) }}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form_label(registrationForm.adresseUtil) }}
+                                {{ form_widget(registrationForm.adresseUtil, {attr: {class: 'form-control colive-input rounded-3', placeholder: '123 rue de la Paix'}}) }}
+                            </div>
+
+                            <div class="row">
+                                <div class="col-4 mb-3">
+                                    {{ form_label(registrationForm.cpUtil) }}
+                                    {{ form_widget(registrationForm.cpUtil, {attr: {class: 'form-control colive-input rounded-3', placeholder: '75000'}}) }}
+                                </div>
+                                <div class="col-8 mb-3">
+                                    {{ form_label(registrationForm.villeUtil) }}
+                                    {{ form_widget(registrationForm.villeUtil, {attr: {class: 'form-control colive-input rounded-3', placeholder: 'Paris'}}) }}
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form_label(registrationForm.password.first) }}
+                                {{ form_widget(registrationForm.password.first, {attr: {class: 'form-control colive-input rounded-3', placeholder: '••••••••'}}) }}
+                            </div>
+
+                            <div class="mb-4">
+                                {{ form_label(registrationForm.password.second) }}
+                                {{ form_widget(registrationForm.password.second, {attr: {class: 'form-control colive-input rounded-3', placeholder: '••••••••'}}) }}
+                            </div>
+
+                            <button type="submit" class="btn btn-login w-100 rounded-3 mb-3">
+                                S'inscrire
+                            </button>
+                        {{ form_end(registrationForm) }}
+
+                        <div class="text-center mt-2">
+                            <p class="small text-muted mb-0">Déjà un compte ?
+                                <a href="{{ path('app_login') }}" style="color: var(--colive-coral); font-weight: 700; text-decoration: none;">
+                                    Connectez-vous !
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

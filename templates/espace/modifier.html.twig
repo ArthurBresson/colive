@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un logement{% endblock %}
+
+{% block main %}
+    {{ include('espace/_form.html.twig', {
+        form: form,
+        label: 'Modifier',
+    }, with_context: false) }}
+{% endblock %}

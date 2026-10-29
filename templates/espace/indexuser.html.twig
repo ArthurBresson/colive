@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% set searchwords = '' %}
+
+{% if app.request.query.get('search') %}
+    {% set searchwords = 'contenant ' ~ app.request.query.get('search') %}
+{% endif %}
+
+{% block title %}Mes logements{% endblock %}
+
+{% block main %}
+    <h3 class="mb-4 text-center">
+        Liste de mes logements <em class="text-secondary">{{ searchwords }}</em>
+    </h3>
+
+    {{ include('espace/_espaces.html.twig') }}
+
+    {{ include('espace/_pagination.html.twig', {path: 'app_espace_user'}) }}
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% set searchwords = '' %}
+
+{% if app.request.query.get('search') %}
+    {% set searchwords = 'contenant ' ~ app.request.query.get('search') %}
+{% endif %}
+
+{% block title %}Trouver un logement{% endblock %}
+
+{% block main %}
+    <div class="d-flex gap-2 m-4 justify-content-center">
+        <form action="{{ path('app_espace') }}" role="search" method="get" class="d-flex gap-2">
+            <input type="search" class="form-control" placeholder="Rechercher un logement" name="search" aria-label="Search" value="{{ app.request.query.get('search')|default('') }}" />
+            <input type="number" class="form-control" placeholder="Prix max" name="maxPrice" aria-label="Search" value="{{ app.request.query.get('maxPrice')|default('') }}" />
+            <input type="number" class="form-control" placeholder="Surface minimum" name="minSurface" aria-label="Search" value="{{ app.request.query.get('minSurface')|default('') }}" />
+            <button type="submit" class="btn btn-outline-secondary">
+                Rechercher
+            </button>
+        </form>
+
+        <a href="{{ path('app_espace_create') }}" class="btn btn-outline-primary">
+            Proposer un logement
+        </a>
+    </div>
+
+    <h3 class="mb-4 text-center">
+        Liste des logements <em class="text-secondary">{{ searchwords }}</em>
+    </h3>
+
+    {{ include('espace/_espaces.html.twig') }}
+
+    {{ include('espace/_pagination.html.twig', {path: 'app_espace'}) }}
+{% endblock %}

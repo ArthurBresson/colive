@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes messages{% endblock %}
+
+{% block main %}
+<div class="container mt-4">
+    <h1>Ma Messagerie</h1>
+    <div class="list-group mt-3">
+        {% for conv in conversations %}
+            <a href="{{ path('app_message_show', {id: conv.id}) }}" class="list-group-item list-group-item-action d-flex justify-content-between">
+                <div>
+                    <strong>
+                        {% for participant in conv.participants %}
+                            {% if participant != app.user %}{{ participant.email }}{% endif %}
+                        {% endfor %}
+                    </strong>
+                    <p class="mb-0 text-muted small">
+                        {{ conv.lastMessage ? conv.lastMessage.content|slice(0, 50) ~ '...' : 'Aucun message' }}
+                    </p>
+                </div>
+                <span class="badge bg-primary rounded-pill h-50">{{ conv.messages|length }}</span>
+            </a>
+        {% else %}
+            <p class="alert alert-light">Vous n'avez pas encore de conversation.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

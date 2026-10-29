@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="row g-5">
+
+        {% for e in espaces %}
+            <div class="col-lg-4">
+                <a href="{{ path('espace', {id: e.id}) }}" class="text-decoration-none">
+                    <div class="card">
+                        {% if e.photoEspaces is not empty %}
+                            <img src="{{ e.photoEspaces[0].getBase64Img }}" alt="photo du logement" class="card-img-top">
+                        {% else %}
+                            <img src="{{ asset('images/espace-no-photo.jpg') }}" alt="photo du logement" class="card-img-top">
+                        {% endif %}
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="card-titre">
+                                    {{ e.titreEsp|default('Sans titre') }}
+                                </h5>
+                                <p class="card-tarif">
+                                    {{ e.tarif }} €
+                                </p>
+                            </div>
+
+                            <p class="card-adress text-muted">
+                                <i class=""></i> {{ e.villeEsp }} ({{ e.cpEsp }})
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+
+    </div>
+</div>

@@ -1,0 +1,12 @@
+[
+    { "name": "Chauffage" },
+    { "name": "Climatisation" },
+    { "name": "Cuisine équipée" },
+    { "name": "Réfrigérateur" },
+    { "name": "Four" },
+    { "name": "Lave-vaisselle" },
+    { "name": "Salle de bain" },
+    { "name": "Lave-linge" },
+    { "name": "Détecteur de fumée" },
+    { "name": "Parking" }
+]

@@ -1,0 +1,158 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CoLive - Accueil{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        :root {
+            --colive-cream: #f4f1de;
+            --colive-blue: #1d3557;
+            --colive-coral: #e76f51;
+            --colive-yellow: #e9c46a;
+            --colive-light-blue: #f8f8fb;
+        }
+
+        .colive-input {
+            transition: all 0.3s ease;
+            border: 2px solid transparent !important;
+        }
+        .colive-input:focus {
+            border-color: var(--colive-yellow) !important;
+            box-shadow: 0 0 0 0.25rem rgba(233, 196, 106, 0.25) !important;
+            transform: translateY(-2px);
+        }
+
+        .colive-btn-search { background-color: var(--colive-coral); color: white; transition: all 0.3s ease; }
+        .colive-btn-propose { background-color: var(--colive-yellow); color: var(--colive-blue); transition: all 0.3s ease; }
+
+        .colive-btn-search:hover, .colive-btn-propose:hover {
+            transform: translateY(-3px) scale(1.03);
+            filter: brightness(1.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .colive-card {
+            transition: all 0.4s ease;
+            border: none !important;
+            border-radius: 20px !important;
+            overflow: hidden;
+        }
+        .colive-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12) !important;
+        }
+        .colive-card-img {
+            transition: transform 0.5s ease;
+            height: 220px;
+            object-fit: cover;
+        }
+        .colive-card:hover .colive-card-img { transform: scale(1.1); }
+
+        .colive-price-badge {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background-color: var(--colive-yellow);
+            color: var(--colive-blue);
+            font-weight: 800;
+            padding: 5px 12px;
+            border-radius: 8px;
+            z-index: 2;
+        }
+
+        .bg-colive-cream { background-color: var(--colive-cream); }
+        .bg-colive-light { background-color: var(--colive-light-blue); }
+        .text-colive-blue { color: var(--colive-blue); }
+    </style>
+{% endblock %}
+
+{% block main %}
+    <section class="bg-colive-light py-5">
+        <div class="container text-center py-4">
+            <h1 class="display-4 fw-bold text-colive-blue mb-3">Trouvez votre colocation, sans prise de tête</h1>
+            <p class="lead text-secondary mx-auto mb-5" style="max-width: 800px;">
+                Étudiants en alternance ? Évitez de payer deux loyers. Recherchez une chambre proche de votre entreprise/école ou proposez votre logement les semaines où vous n'y êtes pas.
+            </p>
+
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                <form action="{{ path('app_espace') }}" method="get" class="d-flex gap-2 flex-wrap flex-md-nowrap">
+                    <input
+                        type="text"
+                        name="search"
+                        class="form-control form-control-lg colive-input shadow-sm"
+                        placeholder="Ville, code postal..."
+                        style="min-width: 250px;"
+                        value="{{ app.request.query.get('search')|default('') }}"
+                    >
+                    <input
+                        type="text"
+                        name="budget"
+                        class="form-control form-control-lg colive-input shadow-sm"
+                        placeholder="Budget € / mois"
+                        style="min-width: 150px;"
+                        value="{{ app.request.query.get('budget')|default('') }}"
+                    >
+                    <button type="submit" class="btn btn-lg colive-btn-search px-4 fw-bold">Rechercher</button>
+                </form>
+                <a
+                    href="{% if is_granted('IS_AUTHENTICATED_FULLY') %}{{ path('app_espace_create') }}{% else %}{{ path('app_login') }}{% endif %}"
+                    class="btn btn-lg colive-btn-propose px-4 fw-bold shadow-sm"
+                >
+                    Proposer un logement
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-colive-cream py-5">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="h1 fw-bold text-colive-blue m-0">Annonces récentes</h2>
+                <a href="#" class="text-colive-blue fw-bold text-decoration-underline">Tout voir</a>
+            </div>
+
+            <div class="row g-4">
+                {% for e in latestEspaces %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <a href="espace/{{ e.id }}" class="card h-100 colive-card shadow-sm text-decoration-none text-dark">
+                        <div class="position-relative">
+                            <img src="{{ asset('images/centre-reims.png') }}" class="card-img-top colive-card-img" alt="Reims">
+                            <span class="colive-price-badge">{{ e.tarif }} €/mois</span>
+                        </div>
+                        <div class="card-body p-4">
+                            <h5 class="card-title fw-bold text-colive-blue">{{ e.titreEsp }} — {{ e.villeEsp }}</h5>
+                            <p class="card-text text-muted mb-0">
+                                {% for c in e.commodites|slice(0, 2) %}
+                                    {{ c.nomCom }} ·
+                                {% endfor %}
+                                {{ e.surface }} m²
+                            </p>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-colive-light py-5">
+        <div class="container">
+            <h2 class="h1 fw-bold text-colive-blue mb-4">Ils ont testé CoLive</h2>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm p-4 h-100 rounded-4" style="background: rgba(255,255,255,0.7);">
+                        <p class="fst-italic fs-5 text-colive-blue mb-3">« J'ai trouvé mon alternance à Paris et ma chambre en 48h. Un gain de temps fou ! »</p>
+                        <p class="fw-bold text-secondary mb-0">— Jeanne P.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm p-4 h-100 rounded-4" style="background: rgba(255,255,255,0.7);">
+                        <p class="fst-italic fs-5 text-colive-blue mb-3">« Proposer mon logement quand je suis à l'école est une source de revenus inattendue. »</p>
+                        <p class="fw-bold text-secondary mb-0">— Marc L.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

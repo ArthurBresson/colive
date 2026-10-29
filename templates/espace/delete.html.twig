@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un logement{% endblock %}
+
+{% block main %}
+    {{ form_start(form) }}
+
+    {{ form_row(form.delete) }}
+    {{ form_row(form.cancel) }}
+
+    {{ form_end(form) }}
+{% endblock %}

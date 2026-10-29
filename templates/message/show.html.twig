@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Discussion{% endblock %}
+
+{% block main %}
+<div class="container mt-4">
+    <a href="{{ path('app_messages_list') }}" class="btn btn-sm btn-outline-secondary mb-3">← Retour</a>
+
+    <div class="card">
+    {% set interlocuteur = null %}
+    {% for participant in conversation.participants %}
+        {% if participant.id != app.user.id %}
+            {% set interlocuteur = participant %}
+        {% endif %}
+    {% endfor %}
+        <div class="card-header bg-light">Discussion avec {{ interlocuteur.prenomUtil }} {{ interlocuteur.nomUtil }}</div>
+        <div class="card-body" style="height: 400px; overflow-y: auto; background-color: #f0f2f5;">
+            {% for msg in conversation.messages %}
+                <div class="d-flex {{ msg.sender == app.user ? 'justify-content-end' : 'justify-content-start' }} mb-2">
+                    <div class="p-2 rounded {{ msg.sender == app.user ? 'bg-primary text-white' : 'bg-white' }}" style="max-width: 75%;">
+                        <small class="d-block {{ msg.sender == app.user ? 'text-white-50' : 'text-muted' }}" style="font-size: 0.75rem;">
+                            {{ msg.sender.email }} - {{ msg.createdAt|date('H:i') }}
+                        </small>
+                        {{ msg.content }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="card-footer">
+            {{ form_start(form) }}
+                {{ form_widget(form.content) }}
+                {{ form_widget(form.envoyer) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

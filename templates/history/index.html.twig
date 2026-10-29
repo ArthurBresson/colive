@@ -1,0 +1,174 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Notre histoire - CoLive{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        :root {
+            --colive-blue: #1d3557;
+            --colive-cream: #f4f1de;
+            --colive-light-blue: #f8f8fb;
+            --colive-coral: #e76f51;
+            --colive-yellow: #e9c46a;
+        }
+
+        .history-section {
+            background-color: var(--colive-light-blue);
+        }
+
+        .text-colive-blue { color: var(--colive-blue); }
+        .text-colive-coral { color: var(--colive-coral); }
+
+        .history-card {
+            border: none !important;
+            border-radius: 20px !important;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Animation au survol des cartes principales */
+        .history-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important;
+        }
+
+        /* Style spécifique pour les petites cartes de valeurs */
+        .value-box {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid #f1f1f1 !important;
+        }
+
+        .value-box:hover {
+            border-color: var(--colive-yellow) !important;
+            transform: scale(1.05);
+            background-color: #fff !important;
+            box-shadow: 0 5px 15px rgba(233, 196, 106, 0.2) !important;
+        }
+
+        .history-eyebrow {
+            letter-spacing: 2px;
+            color: var(--colive-coral) !important;
+        }
+
+        .bg-colive-cream { background-color: var(--colive-cream); }
+    </style>
+{% endblock %}
+
+{% block main %}
+    <main class="history-section py-5">
+        <div class="container py-4">
+
+            <section class="text-center mb-5">
+                <p class="text-uppercase fw-bold mb-2 history-eyebrow">
+                    À propos de CoLive
+                </p>
+                <h1 class="display-4 fw-bold text-colive-blue mb-3">Notre histoire</h1>
+                <p class="text-secondary mx-auto fs-5" style="max-width: 720px;">
+                    CoLive est né d’un constat simple : pour un étudiant en alternance,
+                    trouver un logement adapté à son rythme entre école et entreprise
+                    est souvent un parcours du combattant.
+                </p>
+            </section>
+
+            <section class="mb-4">
+                <div class="card history-card shadow-sm">
+                    <div class="card-body p-4 p-md-5">
+                        <h2 class="h3 fw-bold text-colive-blue mb-3">Aux origines du projet</h2>
+                        <p class="text-secondary fs-5 mb-0">
+                            Tout est parti de l’expérience d’étudiants qui ont dû jongler entre deux villes,
+                            deux loyers et un emploi du temps chargé. Face au manque de solutions pensées
+                            spécifiquement pour les alternants, l’idée de CoLive s’est imposée :
+                            une plateforme claire, centrée sur la colocation et le partage.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-4">
+                <div class="card history-card shadow-sm bg-colive-cream">
+                    <div class="card-body p-4 p-md-5">
+                        <h2 class="h3 fw-bold text-colive-blue mb-3">Notre mission</h2>
+                        <p class="text-secondary fs-5">
+                            CoLive a pour ambition de simplifier la recherche de logement des étudiants en alternance
+                            et de rendre la colocation plus accessible, plus sécurisée et plus agréable.
+                        </p>
+                        <div class="row mt-4">
+                            <div class="col-md-4 mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="rounded-circle bg-white p-2 me-3 shadow-sm text-colive-coral">✓</div>
+                                    <span class="text-colive-blue fw-medium">Accès facilité aux écoles/travail</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="rounded-circle bg-white p-2 me-3 shadow-sm text-colive-coral">✓</div>
+                                    <span class="text-colive-blue fw-medium">Mise en relation directe</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="rounded-circle bg-white p-2 me-3 shadow-sm text-colive-coral">✓</div>
+                                    <span class="text-colive-blue fw-medium">Interface moderne et fiable</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-4">
+                <div class="card history-card shadow-sm">
+                    <div class="card-body p-4 p-md-5">
+                        <h2 class="h3 fw-bold text-colive-blue mb-4 text-center">Nos valeurs</h2>
+
+                        <div class="row g-4">
+                            <div class="col-12 col-md-4">
+                                <div class="value-box rounded-4 p-4 h-100 bg-light text-center">
+                                    <div class="fs-1 mb-2">🚀</div>
+                                    <h3 class="h5 fw-bold text-colive-blue mb-2">Accessibilité</h3>
+                                    <p class="text-secondary small mb-0">
+                                        Une plateforme pensée pour les étudiants, avec des annonces claires et une navigation fluide.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <div class="value-box rounded-4 p-4 h-100 bg-light text-center">
+                                    <div class="fs-1 mb-2">🤝</div>
+                                    <h3 class="h5 fw-bold text-colive-blue mb-2">Confiance</h3>
+                                    <p class="text-secondary small mb-0">
+                                        Des profils complets et des échanges sécurisés pour une relation sereine entre hôte et étudiant.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <div class="value-box rounded-4 p-4 h-100 bg-light text-center">
+                                    <div class="fs-1 mb-2">🏠</div>
+                                    <h3 class="h5 fw-bold text-colive-blue mb-2">Convivialité</h3>
+                                    <p class="text-secondary small mb-0">
+                                        La colocation comme une expérience humaine riche, faite de partage et d'entraide.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="card history-card shadow-sm border-top border-5 border-warning">
+                    <div class="card-body p-4 p-md-5">
+                        <h2 class="h3 fw-bold text-colive-blue mb-3">Et demain ?</h2>
+                        <p class="text-secondary fs-5 mb-0">
+                            CoLive a vocation à évoluer avec les besoins des étudiants. En enrichissant progressivement
+                            la plateforme et en nouant des partenariats, nous voulons faire de la colocation une expérience
+                            <strong>plus simple, plus sûre et plus humaine</strong>.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+{% endblock %}

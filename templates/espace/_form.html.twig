@@ -1,0 +1,102 @@
+{% set submit_label = label %}
+
+<div class="container mt-5">
+    <div class="card-header bg-colive-blue p-4 rounded-top-4">
+        <h3 class="card-title">Proposer un logement</h3>
+    </div>
+
+    <div class="card-body p-4">
+        {{ form_start(form) }}
+
+        <div class="bg-light p-4 rounded-4 border border-2">
+
+            <div class="row g-3 mb-4">
+                <label class="form-label fw-bold">Titre de l'annonce</label>
+                {{ form_widget(form.titreEsp) }}
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Surface (en m²)</label>
+                    {{ form_widget(form.surface) }}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Tarif</label>
+                    {{ form_widget(form.tarif) }}
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Type d'espace</label>
+                    {{ form_widget(form.typeEspace) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-light p-4 rounded-4 border border-2">
+            <div class="row g-3 mb-4">
+                <label class="form-label fw-bold">Adresse</label>
+                {{ form_widget(form.adresseEsp) }}
+            </div>
+
+            <div class="row g-4 mb-4">
+                <div class="col-md-5">
+                    <label class="form-label fw-bold">Code postal</label>
+                    {{ form_widget(form.cpEsp) }}
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label fw-bold">Ville</label>
+                    {{ form_widget(form.villeEsp) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-light p-4 rounded-4 border border-2">
+            <div class="row g-4 mb-4">
+                <label class="form-label fw-bold">Nombre maximum de colocataires</label>
+                {{ form_widget(form.nbMaxColocEsp) }}
+            </div>
+        </div>
+
+        <div class="bg-light p-4 rounded-4 border border-2">
+            <label class="form-label fw-bold">Commodités présentes</label>
+            <div class="row row-cols-2 row-cols-md-3 g-3">
+                {% for child in form.commodites %}
+                    <div class="col">
+                        <div class="form-check m-0">
+                            {{ form_widget(child) }}
+                            {{ form_label(child, null) }}
+                        </div>
+                    </div>
+                {% endfor %}
+        </div>
+        </div>
+
+        <div class="bg-light p-4 rounded-4 border border-2">
+            <div class="row g-4 mb-1">
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Disponibilité du</label>
+                    {{ form_widget(form.availableFromEsp) }}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Au</label>
+                    {{ form_widget(form.availableToEsp) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-light p-4 rounded-4 border border-2">
+            <div class="row g-4 mb-4">
+                <label class="form-label fw-bold">Description (max 250 caractères)</label>
+                {{ form_widget(form.descEsp) }}
+            </div>
+        </div>
+
+        <div class="mt-5 pt-4 border-top d-flex justify-content-center align-items-center gap-3">
+            <a href="{{ path('app_espace') }}" class="btn btn-link text-secondary text-decoration-none">
+                Annuler
+            </a>
+            {{ form_widget(form.envoyer) }}
+            </div>
+
+        {{ form_end(form) }}
+    </div>
+</div>

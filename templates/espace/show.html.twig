@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Logement : {{ espace.adresseEsp }}{% endblock %}
+
+{% set owner = espace.owner %}
+
+{% block main %}
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+            <h1 class="fw-bold m-0">{{ espace.titreEsp }}</h1>
+            <div>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') and (is_granted('ROLE_ADMIN') or owner.id == app.user.id) %}
+                    <a href="{{ path('app_photo_add', {id: espace.id}) }}" class="btn btn-success btn-sm">Ajouter une photo</a>
+                    <a href="{{ path('app_espace_edit', {id: espace.id}) }}" class="btn btn-primary btn-sm">Modifier l'annonce</a>
+                {% endif %}
+                <a href="{{ path('app_espace') }}" class="btn btn-outline-secondary btn-sm">Retour</a>
+            </div>
+        </div>
+
+        <div class="bg-light p-4 rounded shadow-sm mb-4">
+            <div class="row align-items-center">
+                <div class="col">
+                    <p class="h5 mb-1">{{ espace.adresseEsp }}, {{ espace.villeEsp }} ({{ espace.cpEsp }})</p>
+                    <span class="badge bg-white text-primary border border-primary rounded-pill px-3">
+                    {{ espace.typeEspace.tpEspLib }} - {{ espace.surface }} m²
+                </span>
+                    {% for c in espace.commodites %}
+                    <span class="badge bg-white text-success border border-success rounded-pill px-3">
+                        {{ c.nomCom }}
+                        </span>
+                    {% endfor %}
+                </div>
+                <div class="col-auto">
+                    <span class="h2 fw-bold text-dark">{{ espace.tarif }} €</span>
+                </div>
+            </div>
+            <div class="row mt-4 border-top">
+                <div class="col-12">
+                    <p class="lh-lg mb-0" style="text-align: justify; font-size: 0.95rem; white-space: pre-line;">
+                        {{ espace.descEsp }}
+                    </p>
+                </div>
+            </div>
+            <div class="fw-bold m-2">
+                Galerie photo :
+            </div>
+            <div class="container">
+                <div class="row g-4">
+                    {% for photo in espace.photoEspaces %}
+                        <div class="card col-lg-4 border-0">
+                            <img src="{{ photo.getBase64Img }}" alt="{{ photo.nom }}">
+                        </div>
+                    {% else %}
+                        <div class="text-center">
+                            <p class="alert alert-light">Aucune photo pour cet espace.</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <p class="text-muted">Annonce publiée le : {{ espace.datePubliEsp|date('d/m/Y') }}</p>
+
+        <h2 class="fw-bold m-0">
+            Commentaires
+        </h2>
+        <div class="container">
+            {% for a in espace.avisEspace %}
+                <div class="mt-5 card p-4">
+                    <div class="fw-bold">
+                        Utilisateur : {{ a.userAvis.nomUtil }} {{ a.userAvis.prenomUtil }}
+                    </div>
+                    <div>
+                        Note / 5 : {{ a.note }}
+                    </div>
+                    <div class="m-2">
+                        Sujet : {{ a.sujet }}
+                    </div>
+                    <div>
+                        {{ a.txt }}
+                    </div>
+                </div>
+            {% else %}
+            <div class="text-center">
+                <p class="alert alert-light">Aucun avis pour cet espace.</p>
+            </div>
+            {% endfor %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <div class="container mt-5">
+                    {{ form_start(form) }}
+                    <div class="mb-3">
+                        {{ form_widget(form.sujet, {attr: {class: 'form-control', placeholder: 'Sujet'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_widget(form.txt, {attr: {class: 'form-control', placeholder: 'Votre avis'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_widget(form.note, {attr: {class: 'form-control', placeholder: 'Note / 5'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_widget(form.envoyer, {attr: {class: 'form-control btn btn-success', placeholder: 'Note / 5'}}) }}
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="text-center mt-5">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% if owner %}
+                    {% if owner.id != app.user.id %} {# on checke si c'est notre annonce ou pas ( ca serait bete de s'auto reserver ) #}
+                        <a href="{{ path('app_message_start', {id: owner.id}) }}">
+                            <button class="btn btn-primary btn-lg px-5 rounded-pill shadow-sm">
+                                Contacter le propriétaire ({{ owner.prenomUtil }})
+                            </button>
+                        </a>
+                    {% else %}
+                        <p class="alert alert-info d-inline-block">C'est votre annonce.</p>
+                    {% endif %}
+                {% else %}
+                    <p class="text-muted">Aucun contact disponible pour ce logement.</p>
+                {% endif %}
+
+            {% else %}
+                <a href="{{ path('app_login') }}">
+                    <button class="btn btn-outline-primary btn-lg px-5 rounded-pill shadow-sm">Connectez-vous pour réserver</button>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+{% endblock %}

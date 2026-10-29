@@ -1,0 +1,154 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact - CoLive{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        :root {
+            --colive-blue: #1d3557;
+            --colive-light-blue: #f8f8fb;
+            --colive-coral: #e76f51;
+            --colive-yellow: #e9c46a;
+        }
+
+        .contact-section {
+            background-color: var(--colive-light-blue);
+        }
+
+        .text-colive-blue { color: var(--colive-blue); }
+
+        .contact-card {
+            border: none !important;
+            border-radius: 20px !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06) !important;
+        }
+
+        .colive-input {
+            transition: all 0.3s ease;
+            border: 2px solid #eee !important;
+            padding: 12px 15px;
+        }
+
+        .colive-input:focus {
+            border-color: var(--colive-yellow) !important;
+            box-shadow: 0 0 0 0.25rem rgba(233, 196, 106, 0.25) !important;
+            transform: translateY(-2px);
+        }
+
+        .btn-send {
+            background-color: var(--colive-coral);
+            color: white;
+            border: none;
+            font-weight: 700;
+            padding: 12px 30px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .btn-send:hover {
+            background-color: #d65d41;
+            color: white;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 15px rgba(231, 111, 81, 0.2);
+        }
+
+        .info-list li {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-list strong {
+            color: var(--colive-blue);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+    <main class="contact-section py-5">
+        <div class="container py-4">
+
+            <section class="text-center mb-5">
+                <h1 class="display-4 fw-bold text-colive-blue mb-3">Contact</h1>
+                <p class="text-secondary mx-auto fs-5" style="max-width: 720px;">
+                    Une question sur CoLive, une idée d’amélioration ou un souci avec une annonce ?
+                    Envoyez-nous un message, nous reviendrons vers vous au plus vite.
+                </p>
+            </section>
+
+            <div class="row g-4 justify-content-center">
+
+                <div class="col-12 col-lg-7">
+                    <div class="card contact-card p-3 p-md-4">
+                        <div class="card-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="contact_name" class="form-label fw-bold text-colive-blue small">Nom</label>
+                                        <input type="text" id="contact_name" name="name" class="form-control colive-input rounded-3" placeholder="Votre nom">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="contact_email" class="form-label fw-bold text-colive-blue small">Email</label>
+                                        <input type="email" id="contact_email" name="email" class="form-control colive-input rounded-3" placeholder="vous@example.com">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="contact_subject" class="form-label fw-bold text-colive-blue small">Sujet</label>
+                                    <input type="text" id="contact_subject" name="subject" class="form-control colive-input rounded-3" placeholder="Sujet de votre message">
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="contact_message" class="form-label fw-bold text-colive-blue small">Message</label>
+                                    <textarea id="contact_message" name="message" rows="5" class="form-control colive-input rounded-3" placeholder="Expliquez-nous votre demande"></textarea>
+                                </div>
+
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-send rounded-3">
+                                        Envoyer le message
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="col-12 col-lg-4">
+                    <div class="card contact-card h-100 bg-white shadow-sm">
+                        <div class="card-body p-4">
+                            <h2 class="h4 fw-bold text-colive-blue mb-4">Autres moyens de nous joindre</h2>
+                            <p class="text-secondary mb-4">
+                                Vous pouvez également nous contacter pour toute question liée aux colocations,
+                                à votre compte ou à une annonce publiée sur CoLive.
+                            </p>
+
+                            <ul class="list-unstyled info-list">
+                                <li>
+                                    <strong>Email</strong>
+                                    <span class="text-secondary">contact@colive.fr</span>
+                                </li>
+                                <li>
+                                    <strong>Disponibilité</strong>
+                                    <span class="text-secondary">Du lundi au vendredi</span>
+                                </li>
+                                <li>
+                                    <strong>Délai de réponse</strong>
+                                    <span class="text-secondary">Sous 48 heures en moyenne</span>
+                                </li>
+                                <li>
+                                    <strong>Siège social</strong>
+                                    <span class="text-secondary">19 rue du Dev, 51100 Reims</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+
+            </div>
+
+        </div>
+    </main>
+{% endblock %}
